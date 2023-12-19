@@ -1,0 +1,19 @@
+1.
+2. docker:
+docker build -t pytorch_baoru:latest .
+docker run --gpus 'device=1' --name yida_baoru -t -d --rm -it -v /home/bhuang:/app -v /raid/scratch_not_backed_up/bhuang/endododata:/raid/scratch_not_backed_up/baoru pytorch_baoru:latest
+docker run --gpus 'device=1' --name endo_baoru -t -d --rm -it -v /home/bhuang:/app -v /raid/scratch_not_backed_up/bhuang/endododata:/raid/scratch_not_backed_up/baoru pytorch_baoru:latest
+
+3. install 1
+pip install git+https://github.com/NVlabs/tiny-cuda-nn/#subdirectory=bindings/torch
+
+3.4 install 2
+conda create -n yidaneus python=3.8 anaconda
+conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
+pip install git+https://github.com/NVlabs/tiny-cuda-nn/#subdirectory=bindings/torch
+pip install -r requirements.txt
+
+4.run
+python launch.py --config configs/nerf-blender.yaml --train dataset.scene=lego tag=example
+
+5. docker run --gpus all  -it --rm -v /raid/scratch_not_backed_up/<USERNAME>:/raid/scratch_not_backed_up/<USERNAME> -v /home/<USERNAME>:/home/<USERNAME> pytorch_anita
